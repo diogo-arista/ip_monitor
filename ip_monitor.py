@@ -9,7 +9,7 @@ import platform
 import subprocess
 
 # --- Configuration ---
-CHECK_INTERVAL = 60  # Seconds between checks in monitor mode
+CHECK_INTERVAL = 15  # Seconds between checks in monitor mode
 LOG_FILE_PATH = os.path.join("logs", "changes.log")
 IP_API_URL = "http://ip-api.com/json/"
 
@@ -85,6 +85,8 @@ def run_monitor_mode():
             new_ip = data.get('query')
             city = data.get('city', 'Unknown')
             country = data.get('country', 'Unknown')
+            
+            logging.info(f"Check performed. Current IP: {new_ip} | Location: {city}, {country}")
 
             if new_ip and new_ip != current_ip:
                 log_message = f"IP Changed to: {new_ip} | Location: {city}, {country}"
