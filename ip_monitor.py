@@ -5,6 +5,8 @@ import requests
 import argparse
 from datetime import datetime
 from plyer import notification
+import platform
+import subprocess
 
 # --- Configuration ---
 CHECK_INTERVAL = 60  # Seconds between checks in monitor mode
@@ -37,14 +39,20 @@ def get_ip_data():
 def send_notification():
     """Sends a system notification."""
     try:
-        notification.notify(
-            title="IP Monitor",
-            message="IP Changed",
-            app_name="IP Monitor",
-            timeout=10
-        )
-    except Exception:
-        pass
+        if platform.system() == "Darwin":
+            # macOS native notification
+            script = 'display notification "IP Changed" with title "IP Monitor"'
+            subprocess.run(["osascript", "-e", script])
+        else:
+            # Fallback/Default for Windows/Linux
+            notification.notify(
+                title="IP Monitor",
+                message="IP Changed",
+                app_name="IP Monitor",
+                timeout=10
+            )
+    except Exception as e:
+        logging.error(f"Failed to send notification: {e}")
 
 def get_last_ip():
     """Reads the last known IP from the log file."""

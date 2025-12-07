@@ -11,11 +11,55 @@ A simple Python script to monitor changes to your public IP address.
 
 ## Prerequisites
 
-- Python installed on your Windows machine.
-- Required Python packages:
-  ```powershell
-  pip install requests plyer
-  ```
+- Python 3 installed.
+- **Windows**: `pip install requests plyer`
+- **macOS**: Virtual environment recommended (see below).
+
+## How to use in macOS
+
+### 1. Installation
+It is recommended to use a virtual environment to avoid system package conflicts.
+
+1. Open Terminal.
+2. Navigate to the project folder.
+3. Create and activate a virtual environment:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+4. Install dependencies:
+   ```bash
+   pip install requests plyer
+   ```
+
+### 2. Start Monitoring (Visible)
+To run the script in the terminal:
+```bash
+# Ensure venv is active
+source venv/bin/activate
+python3 ip_monitor.py
+```
+
+### 3. Start Monitoring (Background)
+To run the script in the background:
+```bash
+nohup ./venv/bin/python3 ip_monitor.py > /dev/null 2>&1 &
+```
+
+### 4. Check IP Instantly
+```bash
+./venv/bin/python3 ip_monitor.py --now
+```
+
+### 5. Check if running
+```bash
+ps aux | grep ip_monitor.py
+```
+
+### 6. Stop the script
+```bash
+pkill -f ip_monitor.py
+```
 
 ## How to use in Windows
 
@@ -46,7 +90,7 @@ To see your current IP details without monitoring:
 python ip_monitor.py --now
 ```
 
-## How to check if it is running
+## How to check if it is running (Windows)
 
 ### If running visibly:
 - **Check your Taskbar**: Look for the open Command Prompt or PowerShell window.
@@ -61,7 +105,7 @@ python ip_monitor.py --now
   2. Go to the **Details** tab.
   3. Look for `pythonw.exe`.
 
-## How to stop it
+## How to stop it (Windows)
 
 ### If running visibly:
 - **Keyboard Shortcut**: Click into the terminal window and press `Ctrl+C`.
